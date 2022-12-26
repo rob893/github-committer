@@ -2,6 +2,13 @@
 *.ts
 .git*
 .vscode
+.husky
+.prettierignore
+.prettierrc
+commitlint.config.js
+.eslint.json
+LICENSE
+README.md
 local.settings.json
 test
 getting_started.md
