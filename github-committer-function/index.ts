@@ -1,13 +1,28 @@
 import { AzureFunction, Context } from '@azure/functions';
 import { Octokit } from '@octokit/rest';
+import { bindLinqToNativeTypes } from 'typescript-extended-linq';
+import { GitHubFile } from './models';
 
-interface GitHubFile {
-  path: string;
-  mode: '100644' | '100755' | '040000' | '160000' | '120000';
-  type: 'commit' | 'tree' | 'blob';
-  sha?: string | null;
-  content: string;
-}
+bindLinqToNativeTypes();
+
+const reposToIgnore = new Set([
+  'algo-visualizer',
+  'wow-market-watcher',
+  'typescript-extended-linq',
+  'typescript-lru-cache',
+  'Entropy-Game-Engine',
+  'PHP-OData-Query-Builder',
+  'emoji-cache',
+  'Workout-App',
+  'benchmark-scripts',
+  'personal-portfolio-3d',
+  'extension-methods-js',
+  'Application-Health-Checker',
+  'money-manager-service',
+  'dotnet-packages',
+  'wow-market-watcher-ui',
+  'wow-declarations'
+]);
 
 const githubCommitterFunction: AzureFunction = async function (context: Context): Promise<void> {
   context.log('Starting trigger...');
@@ -29,7 +44,22 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
   });
 
   const owner = 'rob893';
-  const repo = 'test-repository';
+
+  const repos = await octokit.repos.listForUser({
+    username: owner,
+    // eslint-disable-next-line camelcase
+    per_page: 100
+  });
+
+  const reposMinusExcluded = repos.data.exceptBy(reposToIgnore, x => x.name).toArray();
+
+  context.log(
+    `${repos.data.length} total repos found. ${reposToIgnore.size} will be ommitted. ${reposMinusExcluded.length} repos to choose from.`
+  );
+
+  const repo = reposMinusExcluded.shuffle().first().name;
+
+  context.log(`A new commit will be created for ${repo}`);
 
   const commits = await octokit.repos.listCommits({
     owner,
@@ -83,7 +113,7 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
     owner,
     repo,
     sha: newCommitSHA,
-    ref: 'heads/main'
+    ref: 'heads/master'
   });
 
   context.log('Function complete!');
