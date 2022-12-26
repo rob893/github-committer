@@ -9,7 +9,7 @@ interface GitHubFile {
   content: string;
 }
 
-const timerTrigger: AzureFunction = async function (context: Context): Promise<void> {
+const githubCommitterFunction: AzureFunction = async function (context: Context): Promise<void> {
   context.log('Starting trigger...');
 
   if (!process.env.GITHUB_PAT) {
@@ -60,6 +60,7 @@ const timerTrigger: AzureFunction = async function (context: Context): Promise<v
     owner,
     repo,
     tree: commitableFiles,
+    // eslint-disable-next-line camelcase
     base_tree: commitSHA,
     message: 'Updated programatically.',
     parents: [commitSHA]
@@ -88,4 +89,4 @@ const timerTrigger: AzureFunction = async function (context: Context): Promise<v
   context.log('Function complete!');
 };
 
-export default timerTrigger;
+export default githubCommitterFunction;

@@ -1,11 +1,11 @@
 {
   "bindings": [
     {
-      "name": "myTimer",
+      "name": "timer",
       "type": "timerTrigger",
       "direction": "in",
       "schedule": "0 0 * * * *"
     }
   ],
-  "scriptFile": "../dist/src/index.js"
+  "scriptFile": "../dist/github-committer-function/index.js"
 }
