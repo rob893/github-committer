@@ -92,7 +92,7 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
     tree: commitableFiles,
     // eslint-disable-next-line camelcase
     base_tree: commitSHA,
-    message: 'Updated programatically.',
+    message: 'Making my GitHub contribution graph look cool.',
     parents: [commitSHA]
   });
 
@@ -103,7 +103,7 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
     owner,
     repo,
     tree: currentTreeSHA,
-    message: `Updated programatically,`,
+    message: 'Making my GitHub contribution graph look cool.',
     parents: [commitSHA]
   });
 
