@@ -17,21 +17,21 @@
     "commitlint": "commitlint --edit"
   },
   "dependencies": {
-    "@azure/functions": "4.6.1",
+    "@azure/functions": "^4.6.1",
     "@octokit/rest": "~19.0.13",
     "typescript-extended-linq": "^4.1.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.7.1",
-    "@commitlint/config-conventional": "19.7.1",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
     "@eslint/js": "^9.20.0",
-    "@types/node": "22.13.1",
+    "@types/node": "^22.13.1",
     "azure-functions-core-tools": "4.0.5907",
     "eslint": "^9.20.0",
-    "husky": "9.1.7",
-    "prettier": "3.4.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
-    "typescript": "5.7.3",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.23.0"
   }
 }
