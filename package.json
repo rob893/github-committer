@@ -12,7 +12,9 @@
     "test": "echo \"No tests yet...\"",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "prettier": "prettier --write **/*.{ts,js,css,html,json} !**/node_modules/** !**/dist/** !**/coverage/** !**/compiled/**"
+    "prettier": "prettier --write **/*.{ts,js,css,html,json} !**/node_modules/** !**/dist/** !**/coverage/** !**/compiled/**",
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "@azure/functions": "4.6.1",
