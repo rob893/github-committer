@@ -1,7 +1,7 @@
-import { AzureFunction, Context } from '@azure/functions';
+import { app, InvocationContext, Timer, TimerHandler } from '@azure/functions';
 import { Octokit } from '@octokit/rest';
 import { bindLinqToNativeTypes } from 'typescript-extended-linq';
-import { GitHubFile } from './models';
+import { GitHubFile } from '../models';
 
 bindLinqToNativeTypes();
 
@@ -24,11 +24,11 @@ const reposToIgnore = new Set([
   'wow-declarations'
 ]);
 
-const githubCommitterFunction: AzureFunction = async function (context: Context): Promise<void> {
+const githubCommitterFunction: TimerHandler = async function (_: Timer, context: InvocationContext): Promise<void> {
   context.log('Starting trigger...');
 
   if (!process.env.GITHUB_PAT) {
-    context.log.error('No value for GITHUB_PAT was set!!! Please ensure this environment variable is set. Exiting.');
+    context.error('No value for GITHUB_PAT was set!!! Please ensure this environment variable is set. Exiting.');
     return;
   }
 
@@ -47,7 +47,6 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
 
   const repos = await octokit.repos.listForUser({
     username: owner,
-    // eslint-disable-next-line camelcase
     per_page: 100
   });
 
@@ -90,7 +89,6 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
     owner,
     repo,
     tree: commitableFiles,
-    // eslint-disable-next-line camelcase
     base_tree: commitSHA,
     message: 'Making my GitHub contribution graph look cool.',
     parents: [commitSHA]
@@ -119,4 +117,7 @@ const githubCommitterFunction: AzureFunction = async function (context: Context)
   context.log('Function complete!');
 };
 
-export default githubCommitterFunction;
+app.timer('githubCommitterFunction', {
+  handler: githubCommitterFunction,
+  schedule: '0 0 * * * *'
+});

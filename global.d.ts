@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { IArrayExtensions, IEnumerable } from 'typescript-extended-linq';
 
 declare global {
