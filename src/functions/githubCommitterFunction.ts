@@ -21,7 +21,10 @@ const reposToIgnore = new Set([
   'money-manager-service',
   'dotnet-packages',
   'wow-market-watcher-ui',
-  'wow-declarations'
+  'wow-declarations',
+  'derpcode',
+  'bbandbarnfire-website',
+  'iot-remote-light-switch'
 ]);
 
 const githubCommitterFunction: TimerHandler = async function (_: Timer, context: InvocationContext): Promise<void> {
